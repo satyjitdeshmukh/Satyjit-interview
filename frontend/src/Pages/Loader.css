@@ -1,0 +1,123 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  
+  .quiz-content {
+    text-align: center;
+    flex: 1;
+  }
+  
+  .quiz-question {
+    font-size: 28px;
+    margin: 20px 0;
+  }
+  
+  .input-form, .voice-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .answer-input {
+    padding: 10px;
+    width: 60%;
+    max-width: 400px;
+    margin-bottom: 20px;
+  }
+  
+  .submit-btn, .voice-btn {
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .voice-btn.start {
+    background-color: #28a745;
+  }
+  
+  .voice-btn.stop {
+    background-color: #ffc107;
+  }
+  
+  .transcript {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .listening-status {
+    color: blue;
+    font-weight: bold;
+  }
+  
+  .loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .loader {
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #3498db;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .feedback {
+    font-size: 22px;
+    color: red;
+  }
+  
+  .next-btn {
+    margin-top: 20px;
+    background-color: #6c757d;
+  }
+  
+  .webcam-container {
+    margin-top: 20px;
+  }
+  
+  .webcam {
+    width: 300px;
+    height: 200px;
+  }
+  
+  .feedback-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+  
+  .feedback-text h1 {
+    font-size: 48px;
+  }
+  

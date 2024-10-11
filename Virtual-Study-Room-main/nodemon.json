@@ -1,0 +1,6 @@
+{
+    "restartDelay": 2000,
+    "watch": ["server.js"],
+    "ext": "js,json"
+  }
+  
