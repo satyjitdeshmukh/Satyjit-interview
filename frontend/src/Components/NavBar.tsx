@@ -20,7 +20,7 @@ export const NavBar = () => {
 
           {/* { <a href='https://virtual-study-room.onrender.com/'>click here</a>
           <a href='http://localhost:3000/room.html?room=2981b5e98'>hecxbsw</a> } */}
-          <a href='http://localhost:5000/'>friend meet</a>
+          <a className='link' href='http://virtual-study-room.onrender.com'>friend meet</a>
 
         </div>
     </DIV>

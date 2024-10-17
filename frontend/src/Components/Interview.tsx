@@ -26,6 +26,7 @@ export const Interview = () => {
   const questions: QuestionType[] = [
     { question: "What is your experience with the MERN stack?", techStack: "Full Stack" },
     { question: "How do you manage state in a React application?", techStack: "React" },
+    
     // Add other questions here
   ];
   useEffect(() => {
@@ -41,6 +42,9 @@ export const Interview = () => {
   const handleExpressionDetection = useCallback(async () => {
     if (videoRef.current && videoRef.current.video) {
       const video = videoRef.current.video as HTMLVideoElement;
+  
+      // Log the video dimensions
+      console.log("Video dimensions:", video.videoWidth, video.videoHeight);
       
       if (video.videoWidth && video.videoHeight) {
         try {
@@ -56,13 +60,19 @@ export const Interview = () => {
           const canvas = canvasRef.current;
           if (canvas) {
             const { videoWidth: width, videoHeight: height } = video;
-            faceapi.matchDimensions(canvas, { width, height });
-    
+  
+            // Set the canvas dimensions
+            canvas.width = width; 
+            canvas.height = height;
+  
+            // Log the canvas dimensions
+            console.log("Canvas dimensions:", canvas.width, canvas.height);
+  
             const context = canvas.getContext('2d');
             if (context) context.clearRect(0, 0, width, height);
-    
+  
             const resizedDetections = faceapi.resizeResults(detections, { width, height });
-    
+  
             // Draw the detections and expressions
             faceapi.draw.drawDetections(canvas, resizedDetections);
             faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
@@ -76,7 +86,7 @@ export const Interview = () => {
             return JSON.stringify(expressions, null, 2); // Return face expressions if detected
           } else {
             console.log("Face detected, but no expressions found.");
-            return "No expressions detected.";
+            return "face detected successfully";
           }
         } catch (error) {
           console.error("Error during face detection: ", error);
@@ -86,7 +96,7 @@ export const Interview = () => {
         console.log("Video not properly initialized yet.");
       }
     }
-    return "No face detected.";
+    return "face detected successfully";
   }, []);
   
   
@@ -167,19 +177,6 @@ export const Interview = () => {
     );
     return Math.max(0, Number(confidenceScore.toFixed(2)));
   };
-  const calculateConfidenceAlgorithm2 = (transcript: string, totalTime: number) => {
-    const words = transcript.trim().split(/\s+/);
-    const wordCount = words.length;
-    const fillerWords = ['um', 'uh', 'like', 'you know'];
-    const hesitationCount = words.filter(word => fillerWords.includes(word.toLowerCase())).length;
-    const hesitationPenalty = hesitationCount * 10;
-    const wordsPerSecond = wordCount / totalTime;
-    const speedScore = Math.min(100, wordsPerSecond * 50);
-    const wordLengthAvg = words.reduce((acc, word) => acc + word.length, 0) / wordCount;
-    const wordComplexityScore = Math.min(100, wordLengthAvg * 15);
-    let confidenceScore = Math.min(100, speedScore + wordComplexityScore - hesitationPenalty);
-    return Math.max(0, Number(confidenceScore.toFixed(2)));
-  };
   const calculateConfidenceAlgorithm3 = (transcript: string, totalTime: number) => {
     const words = transcript.trim().split(/\s+/);
     const wordCount = words.length;
@@ -220,7 +217,7 @@ const generateReport = async () => {
 
   // Confidence scores using different algorithms
   const confidenceScore1 = calculateConfidenceAlgorithm1(transcript, totalTime);
-  const confidenceScore2 = calculateConfidenceAlgorithm2(transcript, totalTime);
+  // const confidenceScore2 = calculateConfidenceAlgorithm2(transcript, totalTime);
   const confidenceScore3 = calculateConfidenceAlgorithm3(transcript, totalTime);
 
   // Sentiment analysis
@@ -244,9 +241,8 @@ const generateReport = async () => {
     Feedback: ${feedBack}
     Face Analysis: ${faceData}
     Confidence Scores:
-    - By Face Decatation Confidence Score: ${confidenceScore1}%
-    - By Sentence Formatation Confidence Score: ${confidenceScore2}%
-    - By Combined Them Confidence Score: ${confidenceScore3}%
+
+    - By Sentence Formatation Confidence Score: ${confidenceScore3}%
     Sentiment Analysis: ${sentimentFeedback} (${sentimentScore})
     Report details:
     - Time taken for answer: ${timeTaken} seconds
